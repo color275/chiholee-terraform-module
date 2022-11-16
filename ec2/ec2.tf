@@ -18,6 +18,7 @@ resource "aws_instance" "this" {
   vpc_security_group_ids = [aws_security_group.this.id]
   iam_instance_profile        = aws_iam_instance_profile.this.name  
   source_dest_check           = false
+  key_name = var.key_name
   # user_data = file("templates/userdata.sh")    
   root_block_device {
     volume_type = "gp2"

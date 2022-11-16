@@ -24,6 +24,10 @@ variable "ec2_info" {
   type = map 
 }
 
+variable "key_name" {
+  type = string
+}
+
 variable "ingress_rules" {
   type = list(tuple([string, string, string, list(string), string, string]))
   default = []
