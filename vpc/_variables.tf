@@ -77,7 +77,7 @@ variable "env" {
   type = string
 }
 
-variable "internet_gateway" {
+variable "internet_gateway_yn" {
   type    = bool
   default = true
 }

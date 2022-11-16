@@ -20,7 +20,7 @@ resource "aws_vpc" "main" {
 ###################################################
 resource "aws_internet_gateway" "internet_gateway" {
 
-  count = var.internet_gateway == true ? 1 : 0
+  count = var.internet_gateway_yn == true ? 1 : 0
 
   vpc_id = aws_vpc.main.id
 
