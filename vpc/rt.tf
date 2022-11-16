@@ -20,7 +20,7 @@ resource "aws_route_table_association" "public_route_table" {
 }
 
 resource "aws_route" "public_r1" {
-  count = var.internet_gateway == true ? 1 : 0
+  count = var.internet_gateway_yn == true ? 1 : 0
   route_table_id              = aws_route_table.public_route_table.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id = aws_internet_gateway.internet_gateway[0].id
