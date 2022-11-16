@@ -12,12 +12,12 @@ data "aws_iam_policy_document" "this" {
 }
 
 resource "aws_iam_instance_profile" "this" {
-  name = "${var.app_name}-${var.ec2_info["ec2_name"]}-ec2-role"
+  name = "${var.project_name}-${var.ec2_info["ec2_name"]}-ec2-role"
   role = aws_iam_role.this.name
 }
 
 resource "aws_iam_role" "this" {
-  name = "${var.app_name}-${var.ec2_info["ec2_name"]}-ec2-role"
+  name = "${var.project_name}-${var.ec2_info["ec2_name"]}-ec2-role"
 
   assume_role_policy = data.aws_iam_policy_document.this.json
 

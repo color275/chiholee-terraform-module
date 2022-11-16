@@ -26,7 +26,7 @@ resource "aws_instance" "this" {
 
   tags = merge(
                 {
-                  Name = "${var.app_name}-${var.ec2_info["ec2_name"]}-${format("%02d", count.index + 1)}"
+                  Name = "${var.project_name}-${var.ec2_info["ec2_name"]}-${format("%02d", count.index + 1)}"
                 }, 
                 var.auto_on_off == true ? { auto_schedule_on_off = true } : {}
                )
@@ -49,6 +49,6 @@ resource "aws_eip" "this" {
   vpc      = true
 
   tags = {
-    Name = "${var.app_name}-${var.ec2_info["ec2_name"]}-${format("%02d", count.index + 1)}"
+    Name = "${var.project_name}-${var.ec2_info["ec2_name"]}-${format("%02d", count.index + 1)}"
   }
 }
