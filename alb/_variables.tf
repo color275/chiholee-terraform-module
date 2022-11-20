@@ -2,7 +2,7 @@ variable "vpc_id" {
     type = string
 }
 
-variable "app_name" {
+variable "project_name" {
     type = string
 }
 

@@ -3,7 +3,7 @@
 ########################################################
 
 resource "aws_lb" "this" {
-  name               = "${var.app_name}-${var.ec2_name}-alb"  
+  name               = "${var.env}-${var.project_name}-${var.ec2_name}-alb"  
   internal           = var.internal
   load_balancer_type = "application"  
   
@@ -69,7 +69,7 @@ resource "aws_lb_listener" "https" {
 }
 
 resource "aws_lb_target_group" "this" {
-  name = "${var.app_name}-${var.ec2_name}"
+  name = "${var.env}-${var.project_name}-${var.ec2_name}"
   port = var.target_group_port
   protocol = "HTTP"
   vpc_id = var.vpc_id
