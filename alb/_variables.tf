@@ -6,6 +6,10 @@ variable "project_name" {
     type = string
 }
 
+variable "env" {
+    type = string
+}
+
 variable "ec2_name" {
     type = string
 }
