@@ -3,7 +3,7 @@
 #####################################################
 
 resource "aws_ecr_repository" "ecr_repository" {
-  name = lower("${var.container_name}/${var.service_name}")
+  name = lower("${var.env}/${var.project_name}/${var.service_name}")
   
 }
 
@@ -19,8 +19,7 @@ data "aws_iam_policy_document" "push_and_pull" {
 
     principals {
       identifiers = [
-                      var.dev_account_id,
-                      var.test_account_id,
+                      var.account_id
                     ]
       type        = "AWS"
     }

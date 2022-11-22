@@ -25,8 +25,19 @@ variable "ami_owners" {
   default = ["self"]
 }
 
-variable "ec2_info" {
-  type = map 
+
+
+variable "cnt" {
+  type = number
+}
+variable "ec2_name" {
+  type = string
+}
+variable "instance_type" {
+  type = string
+}
+variable "volume_size" {
+  type = string
 }
 
 variable "key_name" {

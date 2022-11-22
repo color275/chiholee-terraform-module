@@ -1,5 +1,5 @@
 # resource "aws_lb" "this" {
-#   name               = "${var.service_name}-${var.container_name}-alb"  
+#   name               = "${var.env}-${var.project_name}-${var.service_name}-alb"  
 #   internal           = var.lb_internal
 #   load_balancer_type = "application"
   
@@ -10,7 +10,7 @@
 
 
 resource "aws_lb" "this" {
-  name               = "${var.service_name}-${var.container_name}-${var.load_balancer_type == "application" ? "alb" : "nlb"}"  
+  name               = "${var.env}-${var.project_name}-${var.service_name}-${var.load_balancer_type == "application" ? "alb" : "nlb"}"  
   internal           = var.lb_internal
   load_balancer_type = var.load_balancer_type
   
@@ -132,7 +132,7 @@ resource "aws_lb_listener" "test_blue_green" {
 
 
 resource "aws_lb_target_group" "blue_target_group" {
-  name = "${var.service_name}-${var.container_name}-Blue"  
+  name = "${var.env}-${var.project_name}-${var.service_name}-Blue"  
   port        = var.blue_target_group_port
   protocol    = var.load_balancer_type == "application" ? "HTTP" : "TCP"
   vpc_id      = var.vpc_id
@@ -161,7 +161,7 @@ resource "aws_lb_target_group" "blue_target_group" {
 }
 
 resource "aws_lb_target_group" "green_target_group" {
-  name = "${var.service_name}-${var.container_name}-Green"
+  name = "${var.env}-${var.project_name}-${var.service_name}-Green"
   port        = var.green_target_group_port
   protocol    = var.load_balancer_type == "application" ? "HTTP" : "TCP"
   vpc_id      = var.vpc_id

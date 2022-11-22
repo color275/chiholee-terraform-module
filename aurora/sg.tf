@@ -1,11 +1,11 @@
 resource "aws_security_group" "this" {
   vpc_id = var.vpc_id
-  name_prefix = "${var.service_name}-aurora-sg"
+  name_prefix = "${var.env}-${var.project_name}-${var.service_name}-aurora-sg"
 
   tags = merge(
                 var.tags, 
                 {   
-                  Name = "${var.service_name}-aurora-sg"
+                  Name = "${var.env}-${var.project_name}-${var.service_name}-aurora-sg"
                 }
   )    
 

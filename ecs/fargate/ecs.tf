@@ -17,7 +17,7 @@ resource "aws_ecs_service" "this" {
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.blue_target_group.arn
-    container_name   = var.service_name
+    container_name   = var.container_name
     container_port   = var.container_port
   }  
 
@@ -107,7 +107,7 @@ resource "aws_ecs_task_definition" "this" {
 #     ecr_repository = var.ecr_repository_url
 #     host_port = var.host_port
 #     container_port = var.container_port
-#     log_group = "/aws/ecs/${var.ecs_cluster_name}/${var.service_name}-${var.container_name}/"
+#     log_group = "/aws/ecs/${var.ecs_cluster_name}/${var.env}-${var.project_name}-${var.service_name}/"
     
 #   }
 # }

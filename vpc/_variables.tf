@@ -21,6 +21,10 @@ variable "bastion_instance_type" {
   type = string
 }
 
+variable "eip_yn" {
+  default = false
+}
+
 variable "key_name" {
   type = string
   default = null

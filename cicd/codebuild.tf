@@ -37,19 +37,19 @@ resource "aws_codebuild_project" "codeBuild" {
 
     environment_variable {
       name  = "V_CONTAINER_NAME"
-      value = lower("${var.service_name}-${var.container_name}")
+      value = lower("${var.env}-${var.project_name}-${var.service_name}")
       type  = "PLAINTEXT"
     }
 
     environment_variable {
       name  = "V_FAMILY"
-      value = "${var.service_name}-${var.container_name}"
+      value = "${var.env}-${var.project_name}-${var.service_name}"
       type  = "PLAINTEXT"
     }    
     
     environment_variable {
       name  = "V_LOG_GROUP"      
-      value = "/aws/ecs/${var.ecs_cluster_name}/${var.service_name}-${var.container_name}/"
+      value = "/aws/ecs/${var.ecs_cluster_name}/${var.env}-${var.project_name}-${var.service_name}/"
       type  = "PLAINTEXT"
     }
 
@@ -60,32 +60,16 @@ resource "aws_codebuild_project" "codeBuild" {
     }
 
     environment_variable {
-      name  = "V_DEV_ACCOUNT_ID"
-      value = var.dev_account_id
-      type  = "PLAINTEXT"
-    }
-
-    environment_variable {
-      name  = "V_TEST_ACCOUNT_ID"
-      value = var.test_account_id
-      type  = "PLAINTEXT"
-    }
-
-    environment_variable {
-      name  = "V_PROD_ACCOUNT_ID"
-      value = var.prod_account_id
-      type  = "PLAINTEXT"
-    }
-
-    environment_variable {
       name  = "V_EXECUTION_ROLE_ARN"
-      value = "arn:aws:iam::V_ACCOUNT_ID:role/${var.service_name}-${var.container_name}-ecs-execution-role"
+      # value = "arn:aws:iam::V_ACCOUNT_ID:role/${var.env}-${var.project_name}-${var.service_name}-ecs-execution-role"
+      value = "arn:aws:iam::${var.account_id}:role/${var.env}-${var.project_name}-${var.service_name}-ecs-execution-role"
       type  = "PLAINTEXT"
     }
 
     environment_variable {
       name  = "V_TASK_ROLE_ARN"
-      value = "arn:aws:iam::V_ACCOUNT_ID:role/${var.service_name}-${var.container_name}-ecs-task-role"
+      # value = "arn:aws:iam::V_ACCOUNT_ID:role/${var.env}-${var.project_name}-${var.service_name}-ecs-task-role"
+      value = "arn:aws:iam::${var.account_id}:role/${var.env}-${var.project_name}-${var.service_name}-ecs-task-role"
       type  = "PLAINTEXT"
     }
 
@@ -120,46 +104,21 @@ resource "aws_codebuild_project" "codeBuild" {
     }
 
     environment_variable {
-      name  = "V_DEV_CPU"
-      value = var.dev_cpu
+      name  = "V_CPU"
+      value = var.cpu
       type  = "PLAINTEXT"
     }
 
     environment_variable {
-      name  = "V_DEV_MEMORY"
-      value = var.dev_memory
+      name  = "V_MEMORY"
+      value = var.memory
       type  = "PLAINTEXT"
     }
-
-    environment_variable {
-      name  = "V_TEST_CPU"
-      value = var.test_cpu
-      type  = "PLAINTEXT"
-    }
-
-    environment_variable {
-      name  = "V_TEST_MEMORY"
-      value = var.test_memory
-      type  = "PLAINTEXT"
-    }
-
-    environment_variable {
-      name  = "V_PROD_CPU"
-      value = var.prod_cpu
-      type  = "PLAINTEXT"
-    }
-
-    environment_variable {
-      name  = "V_PROD_MEMORY"
-      value = var.prod_memory
-      type  = "PLAINTEXT"
-    }
-    
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "/${var.service_name}-${var.container_name}/codebuild"
+      group_name  = "/${var.env}-${var.project_name}-${var.service_name}/codebuild"
       stream_name = ""
     }
   }

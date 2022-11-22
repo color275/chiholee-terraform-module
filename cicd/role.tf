@@ -1,5 +1,5 @@
 resource "aws_iam_role" "codebuild_role" {
-  name = "${var.container_name}-${var.service_name}-codebuild-role"
+  name = "${var.env}-${var.project_name}-${var.service_name}-codebuild-role"
 
   assume_role_policy = data.aws_iam_policy_document.codebuild_role.json
   
@@ -11,7 +11,7 @@ resource "aws_iam_role" "codebuild_role" {
 
 
 resource "aws_iam_role" "codepipeline_role" {
-  name = "${var.container_name}-${var.service_name}-codepipeline-role"  
+  name = "${var.env}-${var.project_name}-${var.service_name}-codepipeline-role"  
 
   assume_role_policy = data.aws_iam_policy_document.codepipeline_role.json
 

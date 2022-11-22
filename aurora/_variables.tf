@@ -1,3 +1,11 @@
+variable env {
+  type = string
+}
+
+variable project_name {
+  type = string
+}
+
 variable service_name {
   type = string
 }
@@ -23,14 +31,17 @@ variable enabled_cloudwatch_logs_exports {
   default = []
 }
 
+variable "instance_cnt" {
+  default = 1
+}
+
+variable "instance_class" {
+  type = string
+}
+
 variable long_query_time {
   type = number
   default = 3
-}
-
-
-variable rds_instance {
-  type = map
 }
 
 variable vpc_id {

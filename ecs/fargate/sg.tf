@@ -1,9 +1,9 @@
 
 resource "aws_security_group" "sg" {
   vpc_id = var.vpc_id
-  name_prefix = "${var.service_name}-${var.container_name}-sg"
+  name_prefix = "${var.env}-${var.project_name}-${var.service_name}-sg"
   tags = {
-    Name = "${var.service_name}-${var.container_name}-sg"
+    Name = "${var.env}-${var.project_name}-${var.service_name}-sg"
   }    
 
   egress {
@@ -46,9 +46,9 @@ resource "aws_security_group" "alb_sg" {
   count = var.load_balancer_type == "application" ? 1 : 0
 
   vpc_id = var.vpc_id
-  name_prefix = "${var.service_name}-${var.container_name}-alb-sg"
+  name_prefix = "${var.env}-${var.project_name}-${var.service_name}-alb-sg"
   tags = {
-    Name = "${var.service_name}-${var.container_name}-alb-sg"
+    Name = "${var.env}-${var.project_name}-${var.service_name}-alb-sg"
   }
 
 

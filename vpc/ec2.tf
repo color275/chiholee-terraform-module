@@ -50,7 +50,7 @@ resource "aws_instance" "bastion_ec2" {
 
 resource "aws_eip" "bastion_ec2" {
 
-  count = var.bastion_instance_yn == true ? 1 : 0
+  count = var.bastion_instance_yn == true && var.eip_yn == true ? 1 : 0
 
   instance = aws_instance.bastion_ec2[0].id
   vpc      = true

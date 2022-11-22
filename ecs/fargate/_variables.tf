@@ -1,7 +1,10 @@
+variable "env"  {
+  type = string
+}
 
-# variable "app_name"  {
-#   type = string
-# }
+variable "project_name"  {
+  type = string
+}
 
 variable "service_name"  {
   type = string
@@ -52,10 +55,6 @@ variable private_ip_yn {
   default = false
 }
 
-# variable "alb_arn" {
-#   type = string
-# }
-
 variable "container_name" {
   type    = string
 }
@@ -64,12 +63,6 @@ variable "desired_count" {
   type    = number
   default = 1
 }
-
-# variable "prefix_name" {
-#   type    = string
-# }
-
-
 
 variable "lb_test_listener_port" {
   type    = number
@@ -116,11 +109,8 @@ variable "ingress_rules" {
 
 variable "nlb_ingress_rules" {
   type = list
+  default = null
 }
-
-
-
-
 
 variable "account_id" {
   type = string
@@ -181,4 +171,10 @@ variable retention_in_days {
   default = 30
 }
 
+variable source_bucket_name {
+  type = string
+}
 
+variable kms_arn {
+  type = string
+}

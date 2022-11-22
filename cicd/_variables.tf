@@ -1,11 +1,15 @@
 #########################################
 ## cicd
 #########################################
-variable service_name {
+variable "env" {
   type = string
 }
 
-variable container_name {
+variable project_name {
+  type = string
+}
+
+variable service_name {
   type = string
 }
 
@@ -80,18 +84,6 @@ variable "account_id" {
   type = string
 }
 
-variable dev_account_id {
-  type = string
-}
-
-variable test_account_id {
-  type = string
-}
-
-variable prod_account_id {
-  type = string
-}
-
 variable region {
   type        = string
 }
@@ -114,24 +106,10 @@ variable "container_port" {
 }
 
 # https://docs.aws.amazon.com/ko_kr/AmazonECS/latest/developerguide/task_definition_parameters.html
-variable "dev_cpu" {
+variable "cpu" {
   type = string  
 }
-variable "dev_memory" {  
-  type = string
-}
-
-variable "test_cpu" {
-  type = string  
-}
-variable "test_memory" {  
-  type = string
-}
-
-variable "prod_cpu" {
-  type = string  
-}
-variable "prod_memory" {  
+variable "memory" {  
   type = string
 }
 

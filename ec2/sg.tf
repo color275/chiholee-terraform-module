@@ -1,8 +1,8 @@
 resource "aws_security_group" "this" {
   vpc_id = var.vpc_id
-  name_prefix = "${var.project_name}-${var.ec2_info["ec2_name"]}-sg"
+  name_prefix = "${var.env}-${var.project_name}-${var.ec2_name}-sg"
   tags = {
-    Name = "${var.project_name}-${var.ec2_info["ec2_name"]}-sg"
+    Name = "${var.env}-${var.project_name}-${var.ec2_name}-sg"
   }  
 
   egress {

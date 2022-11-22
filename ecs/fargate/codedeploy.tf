@@ -1,7 +1,7 @@
 // AWS Codedeploy apps defintion for each module
 resource "aws_codedeploy_app" "main" {
   compute_platform = "ECS"
-  name             = "${var.service_name}-${var.container_name}"
+  name             = "${var.env}-${var.project_name}-${var.service_name}"
 }
 
 // AWS Codedeploy Group for each codedeploy app created
@@ -9,7 +9,7 @@ resource "aws_codedeploy_deployment_group" "main" {
   count = 1
   app_name               = aws_codedeploy_app.main.name
   deployment_config_name = "CodeDeployDefault.ECSAllAtOnce"
-  deployment_group_name  = "${var.service_name}-${var.container_name}-codedeploy-group"
+  deployment_group_name  = "${var.env}-${var.project_name}-${var.service_name}-codedeploy-group"
   service_role_arn       = aws_iam_role.codedeploy_role.arn
 
   auto_rollback_configuration {
@@ -76,7 +76,7 @@ resource "aws_codedeploy_deployment_group" "main" {
 ## codedeploy_role
 #################################################################################
 # resource "aws_iam_role" "codedeploy_role" {
-#   name = "${var.service_name}-${var.container_name}-codedeploy-role"
+#   name = "${var.env}-${var.project_name}-${var.service_name}-codedeploy-role"
 
 #   assume_role_policy = jsonencode(
 #                                     {
@@ -102,13 +102,13 @@ resource "aws_codedeploy_deployment_group" "main" {
            
 # # resource "aws_iam_policy_attachment" "codedeploy_role" {
 # resource "aws_iam_role_policy_attachment" "codedeploy_role" {
-#   # name       = "${var.service_name}-${var.container_name}-codedeploy-attach"
+#   # name       = "${var.env}-${var.project_name}-${var.service_name}-codedeploy-attach"
 #   role      = aws_iam_role.codedeploy_role.name
 #   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
 # }
 
 # resource "aws_iam_role_policy" "codedeploy_role" {  
-#   name = "${var.service_name}-${var.container_name}-codedeploy-policy"  
+#   name = "${var.env}-${var.project_name}-${var.service_name}-codedeploy-policy"  
 #   role       = aws_iam_role.codedeploy_role.name
 
 #   policy = <<EOF

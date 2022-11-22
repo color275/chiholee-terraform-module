@@ -2,7 +2,7 @@
 ## ecs_execution_role
 ############################################################################
 resource "aws_iam_role" "ecs_execution_role" {
-  name               = "${var.service_name}-${var.container_name}-ecs-execution-role"
+  name               = "${var.env}-${var.project_name}-${var.service_name}-ecs-execution-role"
   assume_role_policy = data.aws_iam_policy_document.ecs_execution_role.json
 
   # managed_policy_arns = [
@@ -23,7 +23,7 @@ resource "aws_iam_role" "ecs_execution_role" {
 ## ecs_task_role
 ############################################################################
 resource "aws_iam_role" "ecs_task_role" {
-  name               = "${var.service_name}-${var.container_name}-ecs-task-role"
+  name               = "${var.env}-${var.project_name}-${var.service_name}-ecs-task-role"
 
   assume_role_policy = data.aws_iam_policy_document.ecs_execution_role.json                        
 
@@ -38,7 +38,7 @@ resource "aws_iam_role" "ecs_task_role" {
 ## codedeploy
 ############################################################################
 resource "aws_iam_role" "codedeploy_role" {
-  name = "${var.service_name}-${var.container_name}-codedeploy-role"
+  name = "${var.env}-${var.project_name}-${var.service_name}-codedeploy-role"
 
   assume_role_policy = data.aws_iam_policy_document.codedeploy_role.json  
 

@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "codebuild_role" {
 }
 
 resource "aws_iam_policy" "codebuild_policy" {
-  name = "${var.container_name}-${var.service_name}-codebuild-policy"
+  name = "${var.env}-${var.project_name}-${var.service_name}-codebuild-policy"
   policy = data.aws_iam_policy_document.codebuild_policy.json
 }
 
@@ -182,7 +182,7 @@ data "aws_iam_policy_document" "codepipeline_role" {
 
 
 resource "aws_iam_policy" "assume_policy" {  
-  name = "${var.container_name}-${var.service_name}-assume-policy"
+  name = "${var.env}-${var.project_name}-${var.service_name}-assume-policy"
   policy = <<EOF
 {
     "Statement": [
@@ -190,9 +190,7 @@ resource "aws_iam_policy" "assume_policy" {
             "Effect": "Allow",
             "Action": "sts:AssumeRole",
             "Resource": [
-                "arn:aws:iam::${var.dev_account_id}:role/${var.container_name}*",
-                "arn:aws:iam::${var.test_account_id}:role/${var.container_name}*",
-                "arn:aws:iam::${var.prod_account_id}:role/${var.container_name}*"
+                "arn:aws:iam::${var.account_id}:role/${var.env}-${var.project_name}-${var.service_name}*"
             ]
         }
     ],
@@ -209,7 +207,7 @@ EOF
 
 
 resource "aws_iam_policy" "codepipeline_policy" {  
-  name = "${var.container_name}-${var.service_name}-codepipeline-policy"
+  name = "${var.env}-${var.project_name}-${var.service_name}-codepipeline-policy"
   policy = <<EOF
 {
     "Statement": [
@@ -391,20 +389,6 @@ resource "aws_iam_policy" "codepipeline_policy" {
                 "kms:DescribeKey"
             ],
             "Resource": "*"
-        },
-        {         
-            "Effect": "Allow",
-            "Action": [
-                "kms:CreateGrant",
-                "kms:ListGrants",
-                "kms:RevokeGrant"
-            ],
-            "Resource": "*",
-            "Condition": {
-                "Bool": {
-                    "kms:GrantIsForAWSResource": "true"
-                }
-            }
         }
     ],
     "Version": "2012-10-17"

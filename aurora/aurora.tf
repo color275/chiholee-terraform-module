@@ -1,9 +1,9 @@
 resource "aws_rds_cluster" "main" {
-    cluster_identifier      = lower("${var.service_name}-cluster")
+    cluster_identifier      = lower("${var.env}-${var.project_name}-${var.service_name}-cluster")
     engine                  = var.rds_engine
     engine_version          = var.rds_engine_version
     port = 3306
-    database_name           = replace(lower("${var.service_name}-db"),"-","_")
+    database_name           = replace(lower("${var.env}-${var.project_name}-${var.service_name}-db"),"-","_")
     db_subnet_group_name      = aws_db_subnet_group.this.id
     vpc_security_group_ids    = [
                                   aws_security_group.this.id,
@@ -25,29 +25,17 @@ resource "aws_rds_cluster" "main" {
     tags = merge(
                 var.tags, 
                 {   
-                  Name = lower("${var.service_name}-cluster")
+                  Name = lower("${var.env}-${var.project_name}-${var.service_name}-cluster")
                 },
                 var.auto_on_off == true ? { auto_schedule_on_off = true } : {}
     )    
-    
-
-    
-
-    lifecycle {
-        ignore_changes = [
-                            master_username,
-                            master_password,
-                            cluster_identifier,
-                            database_name
-                         ]
-    }
 }
 
 resource "aws_rds_cluster_instance" "cluster_instances" {
-  count              = var.rds_instance["cnt"]
-  identifier         = lower("${var.service_name}-aurora-${format("%02d", count.index + 1)}")
+  count              = var.instance_cnt
+  identifier         = lower("${var.env}-${var.project_name}-${var.service_name}-aurora-${format("%02d", count.index + 1)}")
   cluster_identifier = aws_rds_cluster.main.id
-  instance_class     = var.rds_instance["instance_class"]
+  instance_class     = var.instance_class
   engine             = aws_rds_cluster.main.engine
   engine_version     = aws_rds_cluster.main.engine_version
   db_subnet_group_name      = aws_db_subnet_group.this.id
@@ -56,7 +44,7 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
 
   tags = merge(
                 {
-                  Name = lower("${var.service_name}-aurora-${format("%02d", count.index + 1)}")
+                  Name = lower("${var.env}-${var.project_name}-${var.service_name}-aurora-${format("%02d", count.index + 1)}")
                 }, 
                 var.auto_on_off == true ? { auto_schedule_on_off = true } : {}
                )
@@ -69,7 +57,7 @@ resource "aws_rds_cluster_instance" "cluster_instances" {
 }
 
 resource "aws_rds_cluster_parameter_group" "this" {
-  name   = lower("${var.service_name}-cluster")
+  name   = lower("${var.env}-${var.project_name}-${var.service_name}-cluster")
   family = "aurora-mysql8.0"
 
   parameter {
@@ -152,7 +140,7 @@ resource "aws_rds_cluster_parameter_group" "this" {
 }
 
 resource "aws_db_parameter_group" "this" {
-  name   = lower("${var.service_name}-db")
+  name   = lower("${var.env}-${var.project_name}-${var.service_name}-db")
   family = "aurora-mysql8.0"
 
   lifecycle {
@@ -163,11 +151,11 @@ resource "aws_db_parameter_group" "this" {
 }
 
 resource "aws_db_subnet_group" "this" {
-  name        = lower("${var.service_name}-aurora-subnet-group")
+  name        = lower("${var.env}-${var.project_name}-${var.service_name}-aurora-subnet-group")
   subnet_ids  = var.subnet_ids
 
   tags = {
-    Name      = "${var.service_name}-aurora-subnet-group"
+    Name      = "${var.env}-${var.project_name}-${var.service_name}-aurora-subnet-group"
   }
 
   lifecycle {
