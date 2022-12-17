@@ -35,7 +35,7 @@ resource "aws_ecs_service" "this" {
   lifecycle {
     ignore_changes = [
       load_balancer,
-      desired_count,
+      # desired_count,
       task_definition,
     ]
   }

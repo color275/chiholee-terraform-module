@@ -110,6 +110,34 @@ resource "aws_security_group_rule" "bastion_security_group" {
 
 
 ###################################################################################
+## public group sg
+###################################################################################
+
+resource "aws_security_group" "public_subnet_sg" {
+  vpc_id      = aws_vpc.main.id
+  name_prefix = "${var.project_name}-public-subnet-sg"
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${var.project_name}-public-subnet-sg"
+    }
+  )
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  lifecycle {
+    create_before_destroy = true
+
+  }
+}
+
+###################################################################################
 ## frontend group sg
 ###################################################################################
 

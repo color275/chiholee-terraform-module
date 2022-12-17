@@ -39,7 +39,7 @@ resource "aws_elasticache_replication_group" "redis" {
 
   lifecycle {
     ignore_changes = [
-                        number_cache_clusters,
+                        num_cache_clusters,
                         replication_group_id,                      
                      ]
   }

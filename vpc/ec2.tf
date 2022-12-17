@@ -22,7 +22,7 @@ resource "aws_instance" "bastion_ec2" {
   ami                         = data.aws_ami.this[0].image_id
   instance_type               = var.bastion_instance_type
   subnet_id                   = aws_subnet.public_subnet[0].id
-  vpc_security_group_ids      = [aws_security_group.bastion_security_group[0].id]
+  vpc_security_group_ids      = [aws_security_group.bastion_security_group[0].id,aws_security_group.public_subnet_sg.id]
   iam_instance_profile        = aws_iam_instance_profile.bastion_instance_role[0].name
   associate_public_ip_address = true
   source_dest_check           = false
@@ -43,7 +43,8 @@ resource "aws_instance" "bastion_ec2" {
 
   lifecycle {
     ignore_changes = [
-      ami
+      ami,
+      key_name
     ]
   }
 }

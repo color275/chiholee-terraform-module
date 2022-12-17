@@ -15,6 +15,11 @@ variable "subnet_ids" {
   type = list
 }
 
+variable "security_groups" {
+  type = string
+  default = null
+}
+
 
 variable "ami_name" {
   type = string
@@ -38,6 +43,15 @@ variable "instance_type" {
 }
 variable "volume_size" {
   type = string
+}
+variable "volume_type" {
+  type = string
+  default = "gp2"
+}
+
+variable "volume_iops" {
+  type = string
+  default = null
 }
 
 variable "key_name" {

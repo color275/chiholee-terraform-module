@@ -35,6 +35,14 @@ variable "lb_subnet_ids" {
   type = list
 }
 
+variable "lb_interval" {
+  default = 30
+}
+
+variable "lb_timeout" {
+  default = 5
+}
+
 variable "load_balancer_type" {
   type = string
   default = "application"
@@ -61,6 +69,16 @@ variable "container_name" {
 
 variable "desired_count" {
   type    = number
+  default = 1
+}
+
+variable "max_capacity" {
+  type = number
+  default = 4
+}
+
+variable "min_capacity" {
+  type = number
   default = 1
 }
 

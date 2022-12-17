@@ -2,10 +2,10 @@ resource "aws_codecommit_repository" "this" {
   repository_name = "${var.env}-${var.project_name}-${var.service_name}"
   description     = var.codecommit_repository_description
 
-  lifecycle {
-    # true : 삭제 방지
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   # true : 삭제 방지
+  #   prevent_destroy = true
+  # }
 
   tags = local.tags_merge
 }

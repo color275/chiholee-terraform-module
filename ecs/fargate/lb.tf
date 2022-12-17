@@ -152,6 +152,8 @@ resource "aws_lb_target_group" "blue_target_group" {
       content {
         path = var.target_group_health_check_path
         matcher = var.target_group_health_check_macher
+        interval = var.lb_interval
+        timeout = var.lb_timeout
       }      
   }
 
@@ -181,6 +183,8 @@ resource "aws_lb_target_group" "green_target_group" {
       content {
         path = var.target_group_health_check_path
         matcher = var.target_group_health_check_macher
+        interval = var.lb_interval
+        timeout = var.lb_timeout
       }      
   }
 

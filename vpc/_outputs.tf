@@ -23,6 +23,10 @@ output "bastion_public_ip" {
   value = aws_instance.bastion_ec2[0].public_ip
 }
 
+output "public_subnet_security_group_id" {
+  value = aws_security_group.public_subnet_sg.id
+}
+
 output "frontend_subnet_security_group_id" {
   value = var.frontend_subnet_sg_yn == true ? aws_security_group.frontend_subnet_sg[0].id : null
 }

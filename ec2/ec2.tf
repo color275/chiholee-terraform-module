@@ -15,14 +15,15 @@ resource "aws_instance" "this" {
   ami           = data.aws_ami.this.image_id
   instance_type = var.instance_type
   subnet_id                   = element(var.subnet_ids, count.index)
-  vpc_security_group_ids = [aws_security_group.this.id]
+  vpc_security_group_ids = var.security_groups == null ? [aws_security_group.this.id] : [aws_security_group.this.id, var.security_groups]
   iam_instance_profile        = aws_iam_instance_profile.this.name  
   source_dest_check           = false
   key_name = var.key_name
   # user_data = file("templates/userdata.sh")    
   root_block_device {
-    volume_type = "gp2"
+    volume_type = var.volume_type
     volume_size = var.volume_size
+    iops = var.volume_iops
   }
 
   tags = merge(
@@ -37,7 +38,8 @@ resource "aws_instance" "this" {
                       user_data,
                       ami,
                       instance_type,
-                      root_block_device
+                      root_block_device,
+                      key_name
                      ]
   }
 }
@@ -50,6 +52,6 @@ resource "aws_eip" "this" {
   vpc      = true
 
   tags = {
-    Name = "${var.project_name}-${var.ec2_name}-${format("%02d", count.index + 1)}"
+    Name = "${var.env}-${var.project_name}-${var.ec2_name}-${format("%02d", count.index + 1)}"
   }
 }
