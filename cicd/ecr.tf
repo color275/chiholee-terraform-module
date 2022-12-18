@@ -4,6 +4,8 @@
 
 resource "aws_ecr_repository" "ecr_repository" {
   name = lower("${var.env}/${var.project_name}/${var.service_name}")
+
+  force_delete = true
   
 }
 
